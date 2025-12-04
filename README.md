@@ -1,53 +1,5 @@
-# Projekt 3 – Fullstack Dashboard
+Jag började med att skapa backend med FastAPI‑struktur. Sedan installerade jag fastapi, uvicorn, motor, pydantic och dotenv. Med hjälp av config.py läser jag in MongoDB‑URI och andra inställningar från .env. database.py öppnar en Motor‑klient och ger mig rätt collection, medan services/data_service.py sköter själva CRUD‑logiken mot databasen.
 
-Fullstack-exempel som visar kommunikationen mellan en FastAPI-backend, MongoDB Atlas och en React/Tailwind-dashboard.
+Därefter började jag med frontend genom att använda React, Vite och Tailwind. Jag byggde en Vite React‑app i frontend och installerade axios, chart.js och tailwind. Jag konfigurerade Tailwind (tailwind.config.js, src/index.css). Jag skapade ett formulär för att skapa en ny datapunkt, en tabell som visar datan med delete‑knappar, och längst ner på sidan ett linjediagram via react-chartjs-2. Jag gjorde också MetricsCard för snabbstatistik.
 
-## 1. Backend
-
-```bash
-cd backend
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-cp .env.example .env   # redigera dina MongoDB-uppgifter
-uvicorn app.main:app --reload --port 8001
-```
-
-Endpoints:
-
-- `GET /api/data` – hämtar alla poster
-- `POST /api/data` – skapar ny post
-- `GET /health` – enkel status
-
-## 2. Frontend
-
-```bash
-cd frontend
-npm install
-cp env.example .env.local
-npm run dev
-```
-
-Frontend använder Chart.js för trender, Tailwind för UI och Axios för API-anrop. Miljövariabeln `VITE_API_BASE_URL` pekar mot backend (`http://localhost:8000/api` som standard).
-
-## 3. Database
-
-Importera exempeldatan:
-
-```bash
-cd database
-mongoimport --uri "$MONGODB_URI" --db projekt3 --collection entries --file seed_data.json --jsonArray
-```
-
-## Testflöde
-
-1. Starta backend (`uvicorn ...`).
-2. Starta frontend (`npm run dev`).
-3. Öppna http://localhost:5173, lägg till data via formuläret.
-4. Verifiera i Postman eller `fetch` att `GET /api/data` uppdateras.
-
-## Fler idéer
-
-- Lägg till JWT-autentisering (t.ex. `fastapi-jwt-auth` eller `PyJWT`).
-- Bygg filter/sök i frontend.
-- Schemalägg bakgrundsjobb för automatiska dataposter.
+Jag använde mig av hooken useDashboardData som gör GET, POST och DELETE requests via axios mot API:t och räknar ut statistik (antal poster, summa och snittvärde). App.jsx binder ihop allting: header, kort, tabell, formulär och graf till en komplett dashboard.
