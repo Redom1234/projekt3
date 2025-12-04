@@ -2,15 +2,6 @@
 
 Fullstack-exempel som visar kommunikationen mellan en FastAPI-backend, MongoDB Atlas och en React/Tailwind-dashboard.
 
-## Struktur
-
-```
-projekt3/
-  backend/   # FastAPI + Motor (MongoDB)
-  frontend/  # React + Vite + Tailwind
-  database/  # Mongo-hjälpmedel och seed-data
-```
-
 ## 1. Backend
 
 ```bash
@@ -60,4 +51,3 @@ mongoimport --uri "$MONGODB_URI" --db projekt3 --collection entries --file seed_
 - Lägg till JWT-autentisering (t.ex. `fastapi-jwt-auth` eller `PyJWT`).
 - Bygg filter/sök i frontend.
 - Schemalägg bakgrundsjobb för automatiska dataposter.
-
