@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="min-h-screen px-4 py-10 text-white sm:px-6 lg:px-10">
       <header className="mx-auto max-w-6xl">
-        <h1 className="mt-2 text-4xl font-semibold">Realtime Data Dashboard</h1>
+        <h1 className="mt-2 text-4xl font-semibold">Realtidsdashboard</h1>
       </header>
 
       <main className="mx-auto mt-10 grid max-w-6xl gap-6">
@@ -43,7 +43,7 @@ function App() {
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-xl font-semibold">Dina data</h2>
               {loading ? <span className="text-xs text-slate-400">Laddar...</span> : null}
-      </div>
+            </div>
             <DataTable
               items={items}
               onDelete={async (id) => {
