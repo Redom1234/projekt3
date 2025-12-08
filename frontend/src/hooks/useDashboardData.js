@@ -1,6 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { api } from '../services/api'
 
+const formatError = (err) => {
+  const detail = err?.response?.data?.detail
+  if (Array.isArray(detail)) {
+    // FastAPI validation errors: pull ut "msg" från varje fel
+    return detail.map((d) => d?.msg || JSON.stringify(d)).join('; ')
+  }
+  if (typeof detail === 'string') return detail
+  if (err?.message) return err.message
+  return typeof err === 'object' ? JSON.stringify(err) : String(err)
+}
+
 export const useDashboardData = () => {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
@@ -14,7 +25,7 @@ export const useDashboardData = () => {
       const { data } = await api.get('/data')
       setItems(data)
     } catch (err) {
-      setError(err.message)
+      setError(formatError(err))
     } finally {
       setLoading(false)
     }
@@ -27,7 +38,7 @@ export const useDashboardData = () => {
       const { data } = await api.post('/data', payload)
       setItems((current) => [data, ...current])
     } catch (err) {
-      setError(err.message)
+      setError(formatError(err))
       throw err
     } finally {
       setSubmitting(false)
@@ -41,7 +52,7 @@ export const useDashboardData = () => {
       await api.delete(`/data/${id}`)
       setItems((current) => current.filter((item) => item._id !== id))
     } catch (err) {
-      setError(err.message)
+      setError(formatError(err))
       throw err
     } finally {
       setSubmitting(false)
